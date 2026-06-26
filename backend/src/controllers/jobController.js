@@ -3,6 +3,7 @@ const {
     getAllJobs,
     getJobById,
     updateJob,
+    deleteJob,
 } = require("../services/jobService");
 
 const createJobController = async (req, res) => {
@@ -80,9 +81,34 @@ const updateJobController = async (req, res) => {
     }
 };
 
+const deleteJobController = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletedJob = await deleteJob(id);
+
+        if (!deletedJob) {
+            return res.status(404).json({
+                message: "Vaga não encontrada",
+            });
+        }
+
+        return res.status(200).json({
+            message: "Vaga removida com sucesso",
+            job: deletedJob,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao remover vaga",
+            error: error.message,
+        });
+    }
+};
+
 module.exports = {
     createJobController,
     getAllJobsController,
     getJobByIdController,
     updateJobController,
+    deleteJobController,
 };

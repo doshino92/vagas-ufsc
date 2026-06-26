@@ -32,9 +32,16 @@ const updateJob = async (id, data) => {
     return updatedJob;
 };
 
+const deleteJob = async (id) => {
+    const deletedJob = await Job.findByIdAndDelete(id);
+
+    return deletedJob;
+};
+
 module.exports = {
     createJob,
     getAllJobs,
     getJobById,
     updateJob,
+    deleteJob,
 };
