@@ -17,7 +17,14 @@ const getAllJobs = async () => {
     return jobs;
 };
 
+const getJobById = async (id) => {
+    const job = await Job.findById(id);
+
+    return job;
+};
+
 module.exports = {
     createJob,
     getAllJobs,
+    getJobById,
 };
