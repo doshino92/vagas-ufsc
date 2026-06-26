@@ -23,8 +23,18 @@ const getJobById = async (id) => {
     return job;
 };
 
+const updateJob = async (id, data) => {
+    const updatedJob = await Job.findByIdAndUpdate(id, data, {
+        new: true,
+        runValidators: true,
+    });
+
+    return updatedJob;
+};
+
 module.exports = {
     createJob,
     getAllJobs,
     getJobById,
+    updateJob,
 };
