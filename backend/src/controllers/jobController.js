@@ -1,4 +1,4 @@
-const { createJob } = require("../services/jobService");
+const { createJob, getAllJobs } = require("../services/jobService");
 
 const createJobController = async (req, res) => {
     try {
@@ -20,6 +20,20 @@ const createJobController = async (req, res) => {
     }
 };
 
+const getAllJobsController = async (req, res) => {
+    try {
+        const jobs = await getAllJobs();
+
+        return res.status(200).json(jobs);
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao buscar vagas",
+            error: error.message,
+        });
+    }
+};
+
 module.exports = {
     createJobController,
+    getAllJobsController,
 };
