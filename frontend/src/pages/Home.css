@@ -1,0 +1,33 @@
+.home-page {
+    min-height: 100vh;
+    background: #f3f4f6;
+}
+
+.home-main {
+    padding: 40px 32px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.home-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+.home-card h2 {
+    font-size: 1.25rem;
+    color: #111827;
+    margin-bottom: 12px;
+}
+
+.home-card p {
+    color: #4b5563;
+    margin-bottom: 8px;
+}
+
+.home-hint {
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
