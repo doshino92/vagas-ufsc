@@ -1,41 +1,39 @@
+const mongoose = require("mongoose");
 const Job = require("../models/Job");
 
-const createJob = async ({ title, description, location, recruiterId }) => {
-    const job = await Job.create({
-        title,
-        description,
-        location,
-        recruiterId,
-    });
-
-    return job;
+const createJob = async (data) => {
+    return await Job.create(data);
 };
 
 const getAllJobs = async () => {
-    const jobs = await Job.find().sort({ createdAt: -1 });
-
-    return jobs;
+    return await Job.find().sort({ createdAt: -1 });
 };
 
 const getJobById = async (id) => {
-    const job = await Job.findById(id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return null;
+    }
 
-    return job;
+    return await Job.findById(id);
 };
 
 const updateJob = async (id, data) => {
-    const updatedJob = await Job.findByIdAndUpdate(id, data, {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return null;
+    }
+
+    return await Job.findByIdAndUpdate(id, data, {
         new: true,
         runValidators: true,
     });
-
-    return updatedJob;
 };
 
 const deleteJob = async (id) => {
-    const deletedJob = await Job.findByIdAndDelete(id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return null;
+    }
 
-    return deletedJob;
+    return await Job.findByIdAndDelete(id);
 };
 
 module.exports = {

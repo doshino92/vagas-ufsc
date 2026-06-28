@@ -7,20 +7,47 @@ const jobSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        description: {
+
+        company: {
             type: String,
             required: true,
             trim: true,
         },
+
         location: {
             type: String,
             required: true,
             trim: true,
         },
+
+        salary: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+
+        type: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+
+        modality: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+
+        description: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+
         recruiterId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            required: true,
+            required: false,
         },
     },
     {
