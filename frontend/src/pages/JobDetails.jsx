@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-const API_URL = "http://localhost:5000/api/jobs";
+import { getJobById } from "../services/jobService";
 
 function JobDetails() {
     const { id } = useParams();
@@ -12,14 +11,7 @@ function JobDetails() {
     useEffect(() => {
         async function loadJob() {
             try {
-                const response = await fetch(`${API_URL}/${id}`);
-
-                if (!response.ok) {
-                    throw new Error("Vaga não encontrada.");
-                }
-
-                const data = await response.json();
-
+                const data = await getJobById(id);
                 setJob(data);
             } catch (error) {
                 console.error(error);
