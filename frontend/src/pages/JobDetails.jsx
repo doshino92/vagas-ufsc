@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getJobById } from "../services/jobService";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getJobById, deleteJob } from "../services/jobService";
 
 function JobDetails() {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [job, setJob] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -23,6 +24,27 @@ function JobDetails() {
 
         loadJob();
     }, [id]);
+
+    async function handleDelete() {
+        const confirmed = window.confirm(
+            "Deseja realmente excluir esta vaga?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+            await deleteJob(id);
+
+            alert("Vaga removida com sucesso!");
+
+            navigate("/");
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao remover vaga.");
+        }
+    }
 
     if (loading) {
         return <h2>Carregando vaga...</h2>;
@@ -60,9 +82,30 @@ function JobDetails() {
 
             <p>{job.description}</p>
 
-            <button type="button">
-                Candidatar-se
-            </button>
+            <div
+                style={{
+                    display: "flex",
+                    gap: "12px",
+                    marginTop: "20px",
+                }}
+            >
+                <Link to={`/jobs/${id}/edit`}>
+                    <button type="button">
+                        Editar
+                    </button>
+                </Link>
+
+                <button
+                    type="button"
+                    onClick={handleDelete}
+                >
+                    Excluir
+                </button>
+
+                <button type="button">
+                    Candidatar-se
+                </button>
+            </div>
         </main>
     );
 }
