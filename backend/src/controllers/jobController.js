@@ -8,14 +8,7 @@ const {
 
 const createJobController = async (req, res) => {
     try {
-        const { title, description, location, recruiterId } = req.body;
-
-        const job = await createJob({
-            title,
-            description,
-            location,
-            recruiterId,
-        });
+        const job = await createJob(req.body);
 
         return res.status(201).json(job);
     } catch (error) {
