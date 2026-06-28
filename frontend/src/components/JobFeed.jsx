@@ -2,34 +2,35 @@ import { useEffect, useState } from "react";
 import JobCard from "./JobCard";
 import { getJobs } from "../services/jobService";
 
-function JobFeed({ search }) {
+function JobFeed({ search = "", reloadJobs }) {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function loadJobs() {
             try {
-                const data = await getJobs();
+                setLoading(true);
 
-                console.table(data);
+                const data = await getJobs();
 
                 setJobs(data);
             } catch (error) {
                 console.error("Erro ao carregar vagas:", error);
+                setJobs([]);
             } finally {
                 setLoading(false);
             }
         }
 
         loadJobs();
-    }, []);
+    }, [reloadJobs]);
+
+    const searchText = search.toLowerCase();
 
     const filteredJobs = jobs.filter((job) => {
-        const text = search.toLowerCase();
-
         return (
-            (job.title ?? "").toLowerCase().includes(text) ||
-            (job.company ?? "").toLowerCase().includes(text)
+            (job.title ?? "").toLowerCase().includes(searchText) ||
+            (job.company ?? "").toLowerCase().includes(searchText)
         );
     });
 
