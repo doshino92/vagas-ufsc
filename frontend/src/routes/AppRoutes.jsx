@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "../pages/Home";
 import JobDetails from "../pages/JobDetails";
@@ -20,6 +20,11 @@ function AppRoutes() {
             <Route
                 path="/jobs/:id/edit"
                 element={<EditJob />}
+            />
+
+            <Route
+                path="*"
+                element={<Navigate to="/" replace />}
             />
         </Routes>
     );

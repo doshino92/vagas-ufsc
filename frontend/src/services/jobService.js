@@ -1,67 +1,69 @@
-const API_URL = "/api/jobs";
+const API_URL =
+    import.meta.env.VITE_API_URL || "/api/jobs";
 
-async function getJobs() {
-    const response = await fetch(API_URL);
+async function request(url, options = {}) {
+    let response;
 
-    if (!response.ok) {
-        throw new Error("Erro ao buscar vagas.");
+    try {
+        response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                ...(options.headers || {}),
+            },
+            ...options,
+        });
+    } catch {
+        throw new Error(
+            "Não foi possível conectar ao servidor."
+        );
     }
 
-    return await response.json();
+    let data;
+
+    try {
+        data = await response.json();
+    } catch {
+        data = undefined;
+    }
+
+    if (!response.ok) {
+        throw new Error(
+            data?.message ??
+            "Erro na comunicação com o servidor."
+        );
+    }
+
+    return data;
+}
+
+async function getJobs() {
+    const jobs = await request(API_URL);
+
+    return Array.isArray(jobs) ? jobs : [];
 }
 
 async function getJobById(id) {
-    const response = await fetch(`${API_URL}/${id}`);
-
-    if (!response.ok) {
-        throw new Error("Vaga não encontrada.");
-    }
-
-    return await response.json();
+    return await request(`${API_URL}/${id}`);
 }
 
 async function createJob(job) {
-    const response = await fetch(API_URL, {
+    return await request(API_URL, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(job),
     });
-
-    if (!response.ok) {
-        throw new Error("Erro ao criar vaga.");
-    }
-
-    return await response.json();
 }
 
 async function updateJob(id, job) {
-    const response = await fetch(`${API_URL}/${id}`, {
+    return await request(`${API_URL}/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(job),
     });
-
-    if (!response.ok) {
-        throw new Error("Erro ao atualizar vaga.");
-    }
-
-    return await response.json();
 }
 
 async function deleteJob(id) {
-    const response = await fetch(`${API_URL}/${id}`, {
+    return await request(`${API_URL}/${id}`, {
         method: "DELETE",
     });
-
-    if (!response.ok) {
-        throw new Error("Erro ao remover vaga.");
-    }
-
-    return await response.json();
 }
 
 export {
