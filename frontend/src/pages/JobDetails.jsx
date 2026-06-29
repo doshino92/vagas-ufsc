@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getJobById, deleteJob } from "../services/jobService";
+import "./JobDetails.css";
 
 function JobDetails() {
     const { id } = useParams();
@@ -56,56 +57,42 @@ function JobDetails() {
 
     return (
         <main>
-            <h1>{job.title}</h1>
+            <section className="job-details">
+                <h1>{job.title}</h1>
 
-            <p>
-                <strong>Empresa:</strong> {job.company}
-            </p>
+                <div className="job-details-info">
+                    <p><strong>Empresa:</strong> {job.company}</p>
+                    <p><strong>Tipo:</strong> {job.type}</p>
+                    <p><strong>Modalidade:</strong> {job.modality}</p>
+                    <p><strong>Local:</strong> {job.location}</p>
+                    <p><strong>Salário:</strong> {job.salary}</p>
+                </div>
 
-            <p>
-                <strong>Tipo:</strong> {job.type}
-            </p>
+                <h2>Descrição</h2>
 
-            <p>
-                <strong>Modalidade:</strong> {job.modality}
-            </p>
+                <p className="job-description">
+                    {job.description}
+                </p>
 
-            <p>
-                <strong>Local:</strong> {job.location}
-            </p>
+                <div className="job-details-actions">
+                    <Link to={`/jobs/${id}/edit`}>
+                        <button type="button">
+                            Editar
+                        </button>
+                    </Link>
 
-            <p>
-                <strong>Salário:</strong> {job.salary}
-            </p>
-
-            <h2>Descrição</h2>
-
-            <p>{job.description}</p>
-
-            <div
-                style={{
-                    display: "flex",
-                    gap: "12px",
-                    marginTop: "20px",
-                }}
-            >
-                <Link to={`/jobs/${id}/edit`}>
-                    <button type="button">
-                        Editar
+                    <button
+                        type="button"
+                        onClick={handleDelete}
+                    >
+                        Excluir
                     </button>
-                </Link>
 
-                <button
-                    type="button"
-                    onClick={handleDelete}
-                >
-                    Excluir
-                </button>
-
-                <button type="button">
-                    Candidatar-se
-                </button>
-            </div>
+                    <button type="button">
+                        Candidatar-se
+                    </button>
+                </div>
+            </section>
         </main>
     );
 }
