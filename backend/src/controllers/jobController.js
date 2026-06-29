@@ -12,9 +12,11 @@ const createJobController = async (req, res) => {
 
         return res.status(201).json(job);
     } catch (error) {
+        console.error("Erro ao criar vaga:", error);
+
         return res.status(500).json({
-            message: "Erro ao criar vaga",
-            error: error.message,
+            success: false,
+            message: "Erro ao criar vaga.",
         });
     }
 };
@@ -25,9 +27,11 @@ const getAllJobsController = async (req, res) => {
 
         return res.status(200).json(jobs);
     } catch (error) {
+        console.error("Erro ao buscar vagas:", error);
+
         return res.status(500).json({
-            message: "Erro ao buscar vagas",
-            error: error.message,
+            success: false,
+            message: "Erro ao buscar vagas.",
         });
     }
 };
@@ -40,15 +44,18 @@ const getJobByIdController = async (req, res) => {
 
         if (!job) {
             return res.status(404).json({
-                message: "Vaga não encontrada",
+                success: false,
+                message: "Vaga não encontrada.",
             });
         }
 
         return res.status(200).json(job);
     } catch (error) {
+        console.error("Erro ao buscar vaga:", error);
+
         return res.status(500).json({
-            message: "Erro ao buscar vaga",
-            error: error.message,
+            success: false,
+            message: "Erro ao buscar vaga.",
         });
     }
 };
@@ -61,15 +68,18 @@ const updateJobController = async (req, res) => {
 
         if (!updatedJob) {
             return res.status(404).json({
-                message: "Vaga não encontrada",
+                success: false,
+                message: "Vaga não encontrada.",
             });
         }
 
         return res.status(200).json(updatedJob);
     } catch (error) {
+        console.error("Erro ao atualizar vaga:", error);
+
         return res.status(500).json({
-            message: "Erro ao atualizar vaga",
-            error: error.message,
+            success: false,
+            message: "Erro ao atualizar vaga.",
         });
     }
 };
@@ -82,18 +92,22 @@ const deleteJobController = async (req, res) => {
 
         if (!deletedJob) {
             return res.status(404).json({
-                message: "Vaga não encontrada",
+                success: false,
+                message: "Vaga não encontrada.",
             });
         }
 
         return res.status(200).json({
-            message: "Vaga removida com sucesso",
+            success: true,
+            message: "Vaga removida com sucesso.",
             job: deletedJob,
         });
     } catch (error) {
+        console.error("Erro ao remover vaga:", error);
+
         return res.status(500).json({
-            message: "Erro ao remover vaga",
-            error: error.message,
+            success: false,
+            message: "Erro ao remover vaga.",
         });
     }
 };

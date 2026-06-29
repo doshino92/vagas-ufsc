@@ -9,14 +9,18 @@ function JobDetails() {
 
     const [job, setJob] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         async function loadJob() {
             try {
+                setLoading(true);
+
                 const data = await getJobById(id);
+
                 setJob(data);
             } catch (error) {
-                console.error(error);
+                console.error("Erro ao carregar vaga:", error);
                 setJob(null);
             } finally {
                 setLoading(false);
@@ -31,19 +35,29 @@ function JobDetails() {
             "Deseja realmente excluir esta vaga?"
         );
 
-        if (!confirmed) {
+        if (!confirmed || deleting) {
             return;
         }
 
         try {
+            setDeleting(true);
+
             await deleteJob(id);
 
-            alert("Vaga removida com sucesso!");
+            alert("Vaga removida com sucesso.");
 
-            navigate("/");
+            navigate("/", {
+                replace: true,
+            });
         } catch (error) {
-            console.error(error);
-            alert("Erro ao remover vaga.");
+            console.error("Erro ao remover vaga:", error);
+
+            alert(
+                error?.message ||
+                "Não foi possível remover a vaga."
+            );
+        } finally {
+            setDeleting(false);
         }
     }
 
@@ -52,7 +66,17 @@ function JobDetails() {
     }
 
     if (!job) {
-        return <h2>Vaga não encontrada.</h2>;
+        return (
+            <main>
+                <h2>Vaga não encontrada.</h2>
+
+                <Link to="/">
+                    <button type="button">
+                        Voltar
+                    </button>
+                </Link>
+            </main>
+        );
     }
 
     return (
@@ -84,8 +108,11 @@ function JobDetails() {
                     <button
                         type="button"
                         onClick={handleDelete}
+                        disabled={deleting}
                     >
-                        Excluir
+                        {deleting
+                            ? "Excluindo..."
+                            : "Excluir"}
                     </button>
 
                     <button type="button">

@@ -6,7 +6,9 @@ const createJob = async (data) => {
 };
 
 const getAllJobs = async () => {
-    return await Job.find().sort({ createdAt: -1 });
+    return await Job.find({})
+        .sort({ createdAt: -1 })
+        .lean();
 };
 
 const getJobById = async (id) => {
@@ -14,7 +16,7 @@ const getJobById = async (id) => {
         return null;
     }
 
-    return await Job.findById(id);
+    return await Job.findById(id).lean();
 };
 
 const updateJob = async (id, data) => {
@@ -23,9 +25,9 @@ const updateJob = async (id, data) => {
     }
 
     return await Job.findByIdAndUpdate(id, data, {
-        new: true,
+        returnDocument: "after",
         runValidators: true,
-    });
+    }).lean();
 };
 
 const deleteJob = async (id) => {
@@ -33,7 +35,7 @@ const deleteJob = async (id) => {
         return null;
     }
 
-    return await Job.findByIdAndDelete(id);
+    return await Job.findByIdAndDelete(id).lean();
 };
 
 module.exports = {
