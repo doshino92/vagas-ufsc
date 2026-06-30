@@ -1,4 +1,6 @@
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL =
+    import.meta.env.VITE_API_URL ||
+    "https://vagas-ufsc-backend-962571578704.southamerica-east1.run.app/api";
 
 const getHeaders = (token) => ({
     "Content-Type": "application/json",
@@ -12,7 +14,11 @@ export const authService = {
             headers: getHeaders(),
             body: JSON.stringify(data),
         });
-        return res.json().then((body) => ({ ok: res.ok, ...body }));
+
+        return res.json().then((body) => ({
+            ok: res.ok,
+            ...body,
+        }));
     },
 
     login: async (data) => {
@@ -21,14 +27,22 @@ export const authService = {
             headers: getHeaders(),
             body: JSON.stringify(data),
         });
-        return res.json().then((body) => ({ ok: res.ok, ...body }));
+
+        return res.json().then((body) => ({
+            ok: res.ok,
+            ...body,
+        }));
     },
 
     me: async (token) => {
         const res = await fetch(`${BASE_URL}/auth/me`, {
             headers: getHeaders(token),
         });
-        return res.json().then((body) => ({ ok: res.ok, ...body }));
+
+        return res.json().then((body) => ({
+            ok: res.ok,
+            ...body,
+        }));
     },
 };
 
@@ -39,6 +53,10 @@ export const userService = {
             headers: getHeaders(token),
             body: JSON.stringify(data),
         });
-        return res.json().then((body) => ({ ok: res.ok, ...body }));
+
+        return res.json().then((body) => ({
+            ok: res.ok,
+            ...body,
+        }));
     },
 };
