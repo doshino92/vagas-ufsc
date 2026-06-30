@@ -7,6 +7,16 @@ const getHeaders = (token) => ({
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
 });
 
+const parseResponse = async (res) => {
+    const body = await res.json().catch(() => ({}));
+
+    return {
+        ok: res.ok,
+        status: res.status,
+        ...body,
+    };
+};
+
 export const authService = {
     register: async (data) => {
         const res = await fetch(`${BASE_URL}/auth/register`, {
@@ -15,10 +25,7 @@ export const authService = {
             body: JSON.stringify(data),
         });
 
-        return res.json().then((body) => ({
-            ok: res.ok,
-            ...body,
-        }));
+        return parseResponse(res);
     },
 
     login: async (data) => {
@@ -28,10 +35,7 @@ export const authService = {
             body: JSON.stringify(data),
         });
 
-        return res.json().then((body) => ({
-            ok: res.ok,
-            ...body,
-        }));
+        return parseResponse(res);
     },
 
     me: async (token) => {
@@ -39,10 +43,7 @@ export const authService = {
             headers: getHeaders(token),
         });
 
-        return res.json().then((body) => ({
-            ok: res.ok,
-            ...body,
-        }));
+        return parseResponse(res);
     },
 };
 
@@ -54,9 +55,68 @@ export const userService = {
             body: JSON.stringify(data),
         });
 
-        return res.json().then((body) => ({
-            ok: res.ok,
-            ...body,
-        }));
+        return parseResponse(res);
+    },
+};
+
+export const applicationService = {
+    apply: async (jobId, token) => {
+        const res = await fetch(`${BASE_URL}/jobs/${jobId}/apply`, {
+            method: "POST",
+            headers: getHeaders(token),
+        });
+
+        return parseResponse(res);
+    },
+
+    getMyApplications: async (token) => {
+        const res = await fetch(`${BASE_URL}/applications/my`, {
+            headers: getHeaders(token),
+        });
+
+        return parseResponse(res);
+    },
+
+    getJobApplications: async (jobId, token) => {
+        const res = await fetch(`${BASE_URL}/jobs/${jobId}/applications`, {
+            headers: getHeaders(token),
+        });
+
+        return parseResponse(res);
+    },
+
+    updateStatus: async (applicationId, status, token) => {
+        const res = await fetch(
+            `${BASE_URL}/applications/${applicationId}/status`,
+            {
+                method: "PUT",
+                headers: getHeaders(token),
+                body: JSON.stringify({ status }),
+            }
+        );
+
+        return parseResponse(res);
+    },
+};
+
+export const notificationService = {
+    getAll: async (token) => {
+        const res = await fetch(`${BASE_URL}/notifications`, {
+            headers: getHeaders(token),
+        });
+
+        return parseResponse(res);
+    },
+
+    markAsRead: async (notificationId, token) => {
+        const res = await fetch(
+            `${BASE_URL}/notifications/${notificationId}/read`,
+            {
+                method: "PATCH",
+                headers: getHeaders(token),
+            }
+        );
+
+        return parseResponse(res);
     },
 };
