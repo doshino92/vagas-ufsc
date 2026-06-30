@@ -33,7 +33,7 @@ https://github.com/doshino92/vagas-ufsc
 
 ## Aplicação em Produção
 
-https://vagas-ufsc-frontend-962571578704.southamerica-east1.run.app/login
+https://vagas-ufsc-frontend-314206146627.southamerica-east1.run.app/login
 
 ## Como executar localmente
 
