@@ -19,7 +19,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/applications", applicationRoutes);
+app.use("/api", applicationRoutes);
 app.use("/api/notifications", notificationRoutes);
 
 module.exports = app;
