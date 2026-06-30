@@ -1,0 +1,78 @@
+.page {
+    min-height: 100vh;
+    background: #f5f7fa;
+}
+
+.page-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.page-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 1.5rem;
+}
+
+.info-text {
+    color: #666;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.error-text {
+    color: #e53e3e;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.applications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.application-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    gap: 1rem;
+}
+
+.application-info h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 0.2rem;
+}
+
+.application-location {
+    font-size: 0.88rem;
+    color: #555;
+}
+
+.application-date {
+    font-size: 0.82rem;
+    color: #999;
+    margin-top: 0.2rem;
+}
+
+.status-badge {
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-applied  { background: #ebf8ff; color: #2b6cb0; }
+.status-review   { background: #fffbeb; color: #b7791f; }
+.status-interview{ background: #e9d8fd; color: #6b46c1; }
+.status-rejected { background: #fff5f5; color: #c53030; }
+.status-approved { background: #f0fff4; color: #276749; }
