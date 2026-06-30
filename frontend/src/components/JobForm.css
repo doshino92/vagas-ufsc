@@ -1,0 +1,208 @@
+.jf-page {
+    min-height: 100vh;
+    background: #f3f4f6;
+    display: flex;
+    flex-direction: column;
+}
+
+.jf-main {
+    flex: 1;
+    max-width: 720px;
+    width: 100%;
+    margin: 40px auto;
+    padding: 0 24px;
+}
+
+/* Back link */
+.jf-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: color 0.15s;
+}
+
+.jf-back:hover {
+    color: #1e40af;
+}
+
+/* Card */
+.jf-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.jf-card-header {
+    padding: 24px 32px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.jf-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.jf-card-subtitle {
+    font-size: 0.825rem;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.jf-form {
+    width: 100%;
+    display: block;
+}
+
+.jf-card-body {
+    width: 100%;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Field group */
+.jf-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.jf-field label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.jf-field input,
+.jf-field select,
+.jf-field textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #111827;
+    background: #f9fafb;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.jf-field input:focus,
+.jf-field select:focus,
+.jf-field textarea:focus {
+    border-color: #3b82f6;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.jf-field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+.jf-field textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+/* 2-column grid row */
+.jf-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Actions */
+.jf-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px 32px 28px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.jf-btn-cancel {
+    padding: 10px 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #374151;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, border-color 0.15s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.jf-btn-cancel:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.jf-btn-submit {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #1e40af;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.jf-btn-submit:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.jf-btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .jf-main {
+        margin: 24px auto;
+        padding: 0 16px;
+    }
+
+    .jf-card-header,
+    .jf-card-body {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .jf-actions {
+        padding: 16px 20px 24px;
+        flex-direction: column-reverse;
+    }
+
+    .jf-btn-cancel,
+    .jf-btn-submit {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .jf-row {
+        grid-template-columns: 1fr;
+    }
+}
