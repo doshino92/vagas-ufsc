@@ -1,5 +1,8 @@
-const API_URL =
-    import.meta.env.VITE_API_URL || "/api/jobs";
+const BASE_URL =
+    import.meta.env.VITE_API_URL ||
+    "https://vagas-ufsc-backend-962571578704.southamerica-east1.run.app/api";
+
+const API_URL = `${BASE_URL}/jobs`;
 
 async function request(url, options = {}) {
     let response;
