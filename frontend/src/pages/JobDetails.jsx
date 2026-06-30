@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { getJobById, deleteJob } from "../services/jobService";
 import { applicationService } from "../services/api";
 import { useAuth } from "../contexts/AuthContext";
+import Navbar from "../components/Navbar";
 import "./JobDetails.css";
 
 function JobDetails() {
@@ -103,68 +104,82 @@ function JobDetails() {
         }
     }
 
+    const isOwner = user?.role === "recruiter" && String(job?.recruiterId) === String(user?._id);
+    const isCandidate = user?.role === "candidate";
+
     if (loading) {
         return <h2>Carregando vaga...</h2>;
     }
 
     if (!job) {
         return (
-            <main>
-                <h2>Vaga não encontrada.</h2>
-
-                <Link to="/">
-                    <button type="button">
-                        Voltar
-                    </button>
-                </Link>
-            </main>
+            <div className="page">
+                <Navbar />
+                <main>
+                    <h2>Vaga não encontrada.</h2>
+                    <Link to="/">
+                        <button type="button">Voltar</button>
+                    </Link>
+                </main>
+            </div>
         );
     }
 
     return (
-        <main>
-            <section className="job-details">
-                <h1>{job.title}</h1>
+        <div className="page">
+            <Navbar />
+            <main>
+                <section className="job-details">
+                    <h1>{job.title}</h1>
 
-                <div className="job-details-info">
-                    <p><strong>Empresa:</strong> {job.company}</p>
-                    <p><strong>Tipo:</strong> {job.type}</p>
-                    <p><strong>Modalidade:</strong> {job.modality}</p>
-                    <p><strong>Local:</strong> {job.location}</p>
-                    <p><strong>Salário:</strong> {job.salary}</p>
-                </div>
+                    <div className="job-details-info">
+                        <p><strong>Empresa:</strong> {job.company}</p>
+                        <p><strong>Tipo:</strong> {job.type}</p>
+                        <p><strong>Modalidade:</strong> {job.modality}</p>
+                        <p><strong>Local:</strong> {job.location}</p>
+                        <p><strong>Salário:</strong> {job.salary}</p>
+                    </div>
 
-                <h2>Descrição</h2>
+                    <h2>Descrição</h2>
 
-                <p className="job-description">
-                    {job.description}
-                </p>
+                    <p className="job-description">
+                        {job.description}
+                    </p>
 
-                <div className="job-details-actions">
-                    <Link to={`/jobs/${id}/edit`}>
-                        <button type="button">
-                            Editar
-                        </button>
-                    </Link>
+                    <div className="job-details-actions">
+                        {isOwner && (
+                            <>
+                                <Link to={`/jobs/${id}/edit`}>
+                                    <button type="button">Editar</button>
+                                </Link>
 
-                    <button
-                        type="button"
-                        onClick={handleDelete}
-                        disabled={deleting}
-                    >
-                        {deleting ? "Excluindo..." : "Excluir"}
-                    </button>
+                                <button
+                                    type="button"
+                                    onClick={handleDelete}
+                                    disabled={deleting}
+                                >
+                                    {deleting ? "Excluindo..." : "Excluir"}
+                                </button>
 
-                    <button
-                        type="button"
-                        onClick={handleApply}
-                        disabled={applying}
-                    >
-                        {applying ? "Candidatando..." : "Candidatar-se"}
-                    </button>
-                </div>
-            </section>
-        </main>
+                                <Link to={`/jobs/${id}/applications`}>
+                                    <button type="button">Ver candidatos</button>
+                                </Link>
+                            </>
+                        )}
+
+                        {isCandidate && (
+                            <button
+                                type="button"
+                                onClick={handleApply}
+                                disabled={applying}
+                            >
+                                {applying ? "Candidatando..." : "Candidatar-se"}
+                            </button>
+                        )}
+                    </div>
+                </section>
+            </main>
+        </div>
     );
 }
 

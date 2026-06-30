@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import EditAccount from "../pages/EditAccount";
 import JobDetails from "../pages/JobDetails";
+import CreateJob from "../pages/CreateJob";
 import EditJob from "../pages/EditJob";
 import MyApplications from "../pages/MyApplications";
 import JobApplications from "../pages/JobApplications";
@@ -43,6 +44,15 @@ function AppRoutes() {
                 element={
                     <ProtectedRoute>
                         <JobDetails />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/jobs/new"
+                element={
+                    <ProtectedRoute>
+                        <CreateJob />
                     </ProtectedRoute>
                 }
             />

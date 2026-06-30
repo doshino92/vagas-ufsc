@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { getJobById, updateJob } from "../services/jobService";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { createJob } from "../services/jobService";
 import Navbar from "../components/Navbar";
 import "../components/JobForm.css";
 
@@ -14,36 +14,11 @@ const initialState = {
     description: "",
 };
 
-export default function EditJob() {
-    const { id } = useParams();
+export default function CreateJob() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState(initialState);
-    const [loading, setLoading] = useState(true);
-    const [saving, setSaving] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
-    useEffect(() => {
-        async function loadJob() {
-            try {
-                const job = await getJobById(id);
-                if (!job) { navigate("/", { replace: true }); return; }
-                setFormData({
-                    title: job.title ?? "",
-                    company: job.company ?? "",
-                    location: job.location ?? "",
-                    salary: job.salary ?? "",
-                    type: job.type ?? "",
-                    modality: job.modality ?? "",
-                    description: job.description ?? "",
-                });
-            } catch {
-                navigate("/", { replace: true });
-            } finally {
-                setLoading(false);
-            }
-        }
-        loadJob();
-    }, [id, navigate]);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -60,40 +35,31 @@ export default function EditJob() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        if (saving) return;
+        if (loading) return;
 
-        setSaving(true);
+        setLoading(true);
         setError("");
 
         try {
-            await updateJob(id, formData);
-            navigate(`/jobs/${id}`, { replace: true });
+            await createJob(formData);
+            navigate("/");
         } catch (err) {
-            setError(err?.message || "Não foi possível atualizar a vaga.");
+            setError(err?.message || "Não foi possível publicar a vaga.");
         } finally {
-            setSaving(false);
+            setLoading(false);
         }
-    }
-
-    if (loading) {
-        return (
-            <div className="jf-page">
-                <Navbar />
-                <div className="jf-main"><p>Carregando...</p></div>
-            </div>
-        );
     }
 
     return (
         <div className="jf-page">
             <Navbar />
             <div className="jf-main">
-                <Link to={`/jobs/${id}`} className="jf-back">← Voltar</Link>
+                <Link to="/" className="jf-back">← Voltar</Link>
 
                 <div className="jf-card">
                     <div className="jf-card-header">
-                        <h2 className="jf-card-title">Editar vaga</h2>
-                        <p className="jf-card-subtitle">Atualize as informações da oportunidade.</p>
+                        <h2 className="jf-card-title">Publicar nova vaga</h2>
+                        <p className="jf-card-subtitle">Preencha os dados abaixo para divulgar a oportunidade.</p>
                     </div>
 
                     <form className="jf-form" onSubmit={handleSubmit}>
@@ -216,9 +182,9 @@ export default function EditJob() {
                         </div>
 
                         <div className="jf-actions">
-                            <Link to={`/jobs/${id}`} className="jf-btn-cancel">Cancelar</Link>
-                            <button type="submit" className="jf-btn-submit" disabled={saving}>
-                                {saving ? "Salvando..." : "Salvar alterações"}
+                            <Link to="/" className="jf-btn-cancel">Cancelar</Link>
+                            <button type="submit" className="jf-btn-submit" disabled={loading}>
+                                {loading ? "Publicando..." : "Publicar vaga"}
                             </button>
                         </div>
                     </form>

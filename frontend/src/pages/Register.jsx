@@ -106,11 +106,23 @@ export default function Register() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="role">Sou um</label>
-                                    <select id="role" name="role" value={form.role} onChange={handleChange}>
-                                        <option value="candidate">Candidato</option>
-                                        <option value="recruiter">Recrutador</option>
-                                    </select>
+                                    <label>Sou um</label>
+                                    <div className="role-toggle">
+                                        <button
+                                            type="button"
+                                            className={`role-option${form.role === "candidate" ? " active" : ""}`}
+                                            onClick={() => setForm({ ...form, role: "candidate" })}
+                                        >
+                                            Candidato
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className={`role-option${form.role === "recruiter" ? " active" : ""}`}
+                                            onClick={() => setForm({ ...form, role: "recruiter" })}
+                                        >
+                                            Recrutador
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <button type="submit" className="auth-btn" disabled={loading}>

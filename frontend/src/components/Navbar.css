@@ -1,52 +1,206 @@
 .navbar {
     background: #1e40af;
     color: #fff;
-    padding: 16px 32px;
+    height: 60px;
+    padding: 0 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-brand {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #fff;
     text-decoration: none;
+    letter-spacing: -0.3px;
 }
 
-.navbar-actions {
+.navbar-brand:hover {
+    opacity: 0.85;
+}
+
+/* Nav links row */
+.navbar-nav {
     display: flex;
     align-items: center;
-    gap: 20px;
-}
-
-.navbar-name {
-    font-size: 0.9rem;
-    opacity: 0.9;
+    gap: 8px;
 }
 
 .navbar-link {
-    color: #fff;
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.875rem;
     font-weight: 500;
     text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
 }
 
 .navbar-link:hover {
-    text-decoration: underline;
-}
-
-.navbar-logout {
-    background: none;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
     color: #fff;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: background 0.2s;
 }
 
-.navbar-logout:hover {
-    background: rgba(255, 255, 255, 0.15);
+/* Bell icon button */
+.navbar-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+.navbar-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+/* Divider between links and user */
+.navbar-nav .navbar-icon-btn {
+    margin-left: 4px;
+}
+
+/* User dropdown trigger */
+.navbar-user {
+    position: relative;
+    margin-left: 8px;
+}
+
+.navbar-avatar-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    padding: 6px 10px 6px 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.navbar-avatar-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.navbar-username {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Dropdown menu */
+.navbar-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    animation: dropdown-in 0.12s ease;
+}
+
+@keyframes dropdown-in {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.navbar-dropdown-header {
+    padding: 14px 16px 12px;
+}
+
+.dropdown-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-email {
+    font-size: 0.775rem;
+    color: #6b7280;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navbar-dropdown-divider {
+    height: 1px;
+    background: #f3f4f6;
+    margin: 0;
+}
+
+.navbar-dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 11px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    text-decoration: none;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.12s;
+}
+
+.navbar-dropdown-item:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+.navbar-dropdown-item.danger {
+    color: #dc2626;
+}
+
+.navbar-dropdown-item.danger:hover {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 0 16px;
+    }
+
+    .navbar-username {
+        display: none;
+    }
+
+    .navbar-link {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
 }

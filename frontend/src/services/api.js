@@ -10,6 +10,10 @@ const getHeaders = (token) => ({
 const parseResponse = async (res) => {
     const body = await res.json().catch(() => ({}));
 
+    if (Array.isArray(body)) {
+        return { ok: res.ok, status: res.status, data: body };
+    }
+
     return {
         ok: res.ok,
         status: res.status,
@@ -69,7 +73,7 @@ export const applicationService = {
         return parseResponse(res);
     },
 
-    getMyApplications: async (token) => {
+    myApplications: async (token) => {
         const res = await fetch(`${BASE_URL}/applications/my`, {
             headers: getHeaders(token),
         });
@@ -77,7 +81,7 @@ export const applicationService = {
         return parseResponse(res);
     },
 
-    getJobApplications: async (jobId, token) => {
+    jobApplications: async (token, jobId) => {
         const res = await fetch(`${BASE_URL}/jobs/${jobId}/applications`, {
             headers: getHeaders(token),
         });
@@ -85,7 +89,7 @@ export const applicationService = {
         return parseResponse(res);
     },
 
-    updateStatus: async (applicationId, status, token) => {
+    updateStatus: async (token, applicationId, status) => {
         const res = await fetch(
             `${BASE_URL}/applications/${applicationId}/status`,
             {
@@ -108,7 +112,7 @@ export const notificationService = {
         return parseResponse(res);
     },
 
-    markAsRead: async (notificationId, token) => {
+    markRead: async (token, notificationId) => {
         const res = await fetch(
             `${BASE_URL}/notifications/${notificationId}/read`,
             {

@@ -1,6 +1,7 @@
 const Application = require("../models/Application");
 const Notification = require("../models/Notification");
 const Job = require("../models/Job");
+const User = require("../models/User");
 
 const applyToJob = async ({ jobId, candidateId }) => {
     const existing = await Application.findOne({ jobId, candidateId });
@@ -10,7 +11,19 @@ const applyToJob = async ({ jobId, candidateId }) => {
         throw error;
     }
 
-    const application = await Application.create({ jobId, candidateId });
+    const [application, job, candidate] = await Promise.all([
+        Application.create({ jobId, candidateId }),
+        Job.findById(jobId).select("title recruiterId"),
+        User.findById(candidateId).select("name"),
+    ]);
+
+    if (job?.recruiterId) {
+        await Notification.create({
+            userId: job.recruiterId,
+            message: `${candidate?.name ?? "Um candidato"} se candidatou à vaga "${job.title}".`,
+        });
+    }
+
     return application;
 };
 
