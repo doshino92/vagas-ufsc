@@ -1,0 +1,47 @@
+.back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #4a6fa5;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.back-link:hover { text-decoration: underline; }
+
+.application-email {
+    font-size: 0.88rem;
+    color: #555;
+}
+
+.application-date {
+    font-size: 0.82rem;
+    color: #999;
+    margin-top: 0.2rem;
+}
+
+.application-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+}
+
+.status-select {
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 0.85rem;
+    background: #fff;
+    cursor: pointer;
+    color: #1a1a2e;
+}
+
+.status-select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.feedback-msg {
+    font-size: 0.78rem;
+    color: #276749;
+}
