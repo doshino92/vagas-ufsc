@@ -6,10 +6,9 @@ Plataforma web de divulgação e candidatura a vagas de emprego voltada à comun
 
 - Cadastro e autenticação de usuários com papéis distintos (candidato e recrutador)
 - Publicação de Vagas por recrutadores
-- Feed de vagas com busca e filtros
+- Feed de vagas
 - Candidatura a vagas e acompanhamento das candidaturas
 - Painel do recrutador com listagem de candidatos por vaga
-- Sistema de notificações
 
 ## Tecnologias
 
