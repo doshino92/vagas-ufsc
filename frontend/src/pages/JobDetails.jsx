@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getJobById, deleteJob } from "../services/jobService";
+import { applicationService } from "../services/api";
+import { useAuth } from "../contexts/AuthContext";
 import "./JobDetails.css";
 
 function JobDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user, token } = useAuth();
 
     const [job, setJob] = useState(null);
     const [loading, setLoading] = useState(true);
     const [deleting, setDeleting] = useState(false);
+    const [applying, setApplying] = useState(false);
 
     useEffect(() => {
         async function loadJob() {
@@ -58,6 +62,44 @@ function JobDetails() {
             );
         } finally {
             setDeleting(false);
+        }
+    }
+
+    async function handleApply() {
+        if (!token) {
+            alert("Faça login para se candidatar.");
+            navigate("/login");
+            return;
+        }
+
+        if (user?.role !== "candidate") {
+            alert("Apenas candidatos podem se candidatar.");
+            return;
+        }
+
+        if (
+            job?.recruiterId &&
+            String(job.recruiterId) === String(user?._id)
+        ) {
+            alert("Você não pode se candidatar à sua própria vaga.");
+            return;
+        }
+
+        try {
+            setApplying(true);
+
+            const response = await applicationService.apply(id, token);
+
+            if (response.ok) {
+                alert(response.message || "Candidatura realizada com sucesso!");
+            } else {
+                alert(response.message || "Não foi possível realizar a candidatura.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert(error.message || "Erro ao realizar candidatura.");
+        } finally {
+            setApplying(false);
         }
     }
 
@@ -110,13 +152,15 @@ function JobDetails() {
                         onClick={handleDelete}
                         disabled={deleting}
                     >
-                        {deleting
-                            ? "Excluindo..."
-                            : "Excluir"}
+                        {deleting ? "Excluindo..." : "Excluir"}
                     </button>
 
-                    <button type="button">
-                        Candidatar-se
+                    <button
+                        type="button"
+                        onClick={handleApply}
+                        disabled={applying}
+                    >
+                        {applying ? "Candidatando..." : "Candidatar-se"}
                     </button>
                 </div>
             </section>
