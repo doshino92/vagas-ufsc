@@ -5,7 +5,7 @@ Plataforma web de divulgação e candidatura a vagas de emprego voltada à comun
 ## Funcionalidades
 
 - Cadastro e autenticação de usuários com papéis distintos (candidato e recrutador)
-- Publicação, edição e exclusão de vagas pelos recrutadores
+- Publicação de Vagas por recrutadores
 - Feed de vagas com busca e filtros
 - Candidatura a vagas e acompanhamento das candidaturas
 - Painel do recrutador com listagem de candidatos por vaga
